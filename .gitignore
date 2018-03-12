@@ -20,6 +20,7 @@ postgresql_log
 !/tmp/.keep
 /trace.txt
 trace.txt
+dump.rdb
 
 # Ignore Byebug command history file.
 .byebug_history
