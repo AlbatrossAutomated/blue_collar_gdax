@@ -359,6 +359,7 @@ subsequent checks won't be run.
 ## GTK's Before Developing/Running BlueCollar
 #### Recently Added (not 'Battle Tested') Features
 * Base Currency Stashing
+* Order Backfilling default to `false`
 * Reserve
 * Settings Estimator
 
