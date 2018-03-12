@@ -382,19 +382,21 @@ currently that aggregates and sells them when their total meets the min trade am
 #### Breakeven Pricing
 If for whatever reason a sell order placed at the set PI would result in a loss
 given the cost of the associated buy, BlueCollar will place the sell at a break
-even price. However it is blind as to whether or not that sell side would ultimately
+even price. However it is blind as to whether or not the sell side would ultimately
 incur a taker fee. If it does, the flipped trade _could_ end up being a losing trade.
 #### Reconciling Sells When Restarted
-You don't need to do anything if there were pending sell orders that executed
-while the trader wasn't running. One of the first things BlueCollar does when it
-starts/re-starts is check if any sell orders executed while it was away.
+You don't need to do anything if sell orders execute while the trader was stopped.
+One of the first things BlueCollar does when it starts/re-starts is check if any
+sell orders executed while it was away. If any did, it will reconcile them before
+beginning the trade cycle.
 #### Errors on Restart
 If the trader crashes/fails in between persisting a buy order and placing a sell,
 your last FlippedTrade record will likely have a `:sell_price` and `:sell_order_id`
 of `nil`, which will fail during reconcile on restart. I've preferred to let the
 trader choke here as a reminder the sell side wasn't handled, and I should do
-something about the coins from the buy side left in my account. I do what's easiest
-and place a sell manually for them, then delete the FlippedTrade record, then restart.
+something about the coins from the buy side left in my account. When this has occured,
+I do what's easiest and place a sell manually for them, then delete the FlippedTrade
+record, then restart.
 #### Manual Trading
 Recent updates should make it less problematic to manually trade the same crypto
 BlueCollar is trading. However this is not battle tested on the live exchange.
@@ -491,7 +493,7 @@ To use the Settings Estimator:
 3. Visit localhost:3000 in a browser.
 4. Use the form to change various settings and see the results.
 
-*<u>Main Appetite Settings</u>*  
+<u>_Main Appetite Settings_</u>  
 
 **`COVERAGE`**  
 Float: A percent of market price as decimal, 0.01 to 1.00.  
@@ -548,7 +550,7 @@ to the cost of the buy.
 
 * The smaller the PI the more likely it becomes that sell orders will incur a taker fee.
 
-*<u>Other Appetite Settings</u>*  
+<u>_Other Appetite Settings_</u>  
 
 **`HOARD_QUOTE_PROFITS`**  
 Boolean (default is `true`): separate cumulative quote currency profits from the
