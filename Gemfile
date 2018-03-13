@@ -6,19 +6,17 @@ gem 'pg'
 gem 'rake'
 gem 'awesome_print'
 gem 'coinbase-exchange', '0.1.1'
-# gem 'rack-protection', :github => "sinatra/rack-protection"
-gem 'sinatra' #, git: 'https://github.com/sinatra/sinatra'
+gem 'sinatra'
 gem 'dotenv-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.5'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
-# gem 'redis-rails'
 gem 'clockwork', require: false
 gem 'active_attr'
 
-# needed in prod for anyone using heroku
+# needed in prod git pushing Heroku
 gem 'brakeman', :require => false
 gem 'bundler-audit', :require => false
 gem 'rubocop', require: false
