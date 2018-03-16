@@ -60,11 +60,11 @@ class Trader
 
     def handle_filled_scrum(buy_order)
       Bot.log('The SCRUM filled')
-      setup_straddle(buy_order)
+      handle_filled_buy(buy_order)
       @status = { buy_down: true }
     end
 
-    def setup_straddle(buy_order)
+    def handle_filled_buy(buy_order)
       Bot.log("Possible API response w/wrong 'filled_size' causing error on sell side: ", buy_order, :debug)
       flipped_trade = FlippedTrade.create_from_buy(buy_order)
       place_sell(flipped_trade, buy_order)
@@ -176,7 +176,7 @@ class Trader
 
     def straddle_buy_down(buy_order)
       Bot.log("BUY DOWN FILLED!!")
-      setup_straddle(buy_order)
+      handle_filled_buy(buy_order)
       buy_down = place_buy_down(@bid)
 
       @buy_order_id = buy_down[:buy_order_id]
@@ -235,7 +235,7 @@ class Trader
         retry
       end
 
-      setup_straddle(buy_order)
+      handle_filled_buy(buy_order)
 
       { buy_down: true }
     end
