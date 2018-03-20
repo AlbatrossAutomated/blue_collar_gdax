@@ -1,13 +1,3 @@
-***
-_UPDATE: Another market maker named 'Tumbleweed GDAX' will be released in the
-near future. It should be somewhat more affordable to operate than BlueCollar.
-Tumbleweed replaces BlueCollar's 'fund stretching' strategy of `COVERAGE` with
-simply determined and configurable `NO_TRADE_ZONES`. This is hopefully a more
-easily understandable mechanism for operators. Quantity per trade will also be configurable,
-meaning smaller stacks won't bump up against the exchange's min trade amount as they
-do with BlueCollar._
-***
-
 This project is for developers who are also traders. If you haven't already developed
 against an exchange API where funds have been at risk, attempting to operate this
 trader will likely be an unpleasant experience. Depending on your goals and
@@ -18,6 +8,16 @@ toolkit.
 You may, however, be interested in this repo even if you choose not to operate it.
 The documentation thoroughly details the market making strategy it employs, and
 that may be of interest to you. Or perhaps something in the codebase will be of use.
+
+***
+_UPDATE: Another market maker named 'Tumbleweed GDAX' will be released in the
+near future. It should be somewhat more affordable to operate than BlueCollar.
+Tumbleweed replaces BlueCollar's 'fund stretching' strategy of `COVERAGE` with
+simply determined and configurable `NO_TRADE_ZONES`. This is hopefully a more
+easily understandable mechanism for operators. Quantity per trade will also be configurable,
+meaning smaller stacks won't bump up against the exchange's min trade amount as they
+do with BlueCollar._
+***
 
 ## Introduction
 BlueCollar is a market maker specialized to trade crypto-fiat pairs on the GDAX
