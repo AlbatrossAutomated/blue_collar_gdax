@@ -1,3 +1,13 @@
+***
+_UPDATE: Another market maker named 'Tumbleweed GDAX' will be released in the
+near future. It should be somewhat more affordable to operate than BlueCollar.
+Tumbleweed replaces BlueCollar's 'fund stretching' strategy of `COVERAGE` with
+simply determined and configurable `NO_TRADE_ZONES`. This is hopefully a more
+easily understandable mechanism for operators. Quantity per trade will also be configurable,
+meaning smaller stacks won't bump up against the exchange's min trade amount as they
+do with BlueCollar._
+***
+
 This project is for developers who are also traders. If you haven't already developed
 against an exchange API where funds have been at risk, attempting to operate this
 trader will likely be an unpleasant experience. Depending on your goals and
