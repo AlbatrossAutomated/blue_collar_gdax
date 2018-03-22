@@ -18,9 +18,7 @@ RSpec.describe Trader, type: :model do
     context 'prior to buy order monitoring' do
       before do
         allow(Trader).to receive(:loop).and_yield
-        allow(Trader).to receive(:monitor_scrum) do
-          { monitoring: 'psyche!' }
-        end
+        allow(Trader).to receive(:monitor_scrum) { { monitoring: 'psyche!' } }
       end
 
       context 'successful order placement' do
@@ -56,7 +54,7 @@ RSpec.describe Trader, type: :model do
       end
     end
 
-    context 'while monitoring pending buy order' do
+    context 'while monitoring pending scrum order' do
       context 'order executed' do
         let(:straddle_order_id) { '6' }
         let(:straddle_bid) { Decide.scrum_params[:bid] }
@@ -122,6 +120,33 @@ RSpec.describe Trader, type: :model do
       it 'idles' do
         expect(Decide).to receive(:affordable?).exactly(:twice)
       end
+    end
+  end
+
+  describe '.exchange_finalized' do
+    let(:bid) { scrum_params[:bid] }
+    let(:inaccurate_resp) do
+      order = JSON.parse(filled_buy_resp)
+      filled_size = order['filled_size']
+      inaccurate = order.merge('filled_size' => BigDecimal.new(filled_size) * 0.10)
+      inaccurate.to_json
+    end
+    let(:inaccurate_parsed) { JSON.parse(inaccurate_resp) }
+
+    before do
+      allow(Trader).to receive(:loop).and_yield.and_yield.and_yield
+      allow(Request).to receive(:order).and_return(inaccurate_resp, filled_buy_resp)
+    end
+
+    subject { Trader.exchange_finalized(inaccurate_parsed) }
+
+    it "polls the endpoint until 'filled_size' is accurate" do
+      expect(Request).to receive(:order).exactly(:twice)
+      subject
+    end
+
+    it 'returns the exchange finalized order' do
+      expect(subject).to eq JSON.parse(filled_buy_resp)
     end
   end
 

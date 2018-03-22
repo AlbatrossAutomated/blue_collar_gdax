@@ -5,7 +5,7 @@ ruby '2.4.2'
 gem 'pg'
 gem 'rake'
 gem 'awesome_print'
-gem 'coinbase-exchange', '0.1.1'
+gem 'coinbase-exchange', '0.1.1' # later version returns hashes instead of JSON
 gem 'sinatra'
 gem 'dotenv-rails'
 
