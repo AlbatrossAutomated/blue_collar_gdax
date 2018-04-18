@@ -160,15 +160,15 @@ the Total account value is generally steady upward. It should be clear why earli
 I warned "A sell off in periods of significantly declining balances results in
 unrealized losses becoming realized, and neutralizes the trader's long term strategy."
 In the graph above in later December, the fiat account has dropped by about half.
-Operating BlueCollar over long periods can at times require a strong stomach,
+Operating a committed market maker over long periods can at times require a strong stomach,
 or at least trusting that overall portfolio value is a better indicator of long
 term health than what's happening to your fiat today.  
 
 The behavior BlueCollar exhibits is markedly counterintuitive -- exchange the asset
 of appreciating value for the asset of depreciating value. The automation of the
 strategy took an approach where BlueCollar manages trading activity based on the
-settings provided by an operator. So in its current state, the trader's decisions
-are also a factor that influences performance.
+settings provided by an operator. So in its current state, the operators's decisions
+about those settings are also a factor that influences performance.
 
 For a look at longer term performance over a variety of market movement you can
 see this ![wiki page](https://github.com/AlbatrossAutomated/blue_collar_gdax/wiki/Performance)  
