@@ -3,8 +3,8 @@ _UPDATE: A similar market maker named 'Tumbleweed GDAX' is now open sourced as
 well. It should be somewhat more affordable to operate than BlueCollar.
 Tumbleweed replaces BlueCollar's 'fund stretching' strategy of `COVERAGE` with
 simply determined and configurable `NO_TRADE_ZONES`. This is hopefully a more
-easily understandable mechanism for operators than `COVERAGE`. With Tumbleweed, 
-quantity per trade is also configurable, meaning smaller stacks won't bump up 
+easily understandable mechanism for operators than `COVERAGE`. With Tumbleweed,
+quantity per trade is also configurable, meaning smaller stacks won't bump up
 against the exchange's min trade amount as they do with BlueCollar._  
 
 [Tumbleweed GDAX](https://github.com/AlbatrossAutomated/tumbleweed_gdax)
@@ -151,11 +151,29 @@ it will always be able to generate passive income except in two market environme
 1. A long-lived sideways market, aka a "frozen market"
 2. A price collapse to 0 without a rebound
 
-The automation of this strategy took an approach where BlueCollar manages trading
-activity based on the settings provided by an operator. So in its current state,
-the trader's decisions are a factor that influences performance.
+The image below is a nice depiction of how this strategy plays out over time.
 
-#### Characteristics
+![pv and currency flows](public/images/pv_and_currency_flows.png?raw=true)  
+
+Notice how widely the currency and coin balances/value oscillate and mirror, but
+the Total account value is generally steady upward. It should be clear why earlier
+I warned "A sell off in periods of significantly declining balances results in
+unrealized losses becoming realized, and neutralizes the trader's long term strategy."
+In the graph above in later December, the fiat account has dropped by about half.
+Operating BlueCollar over long periods can at times require a strong stomach, 
+or at least trusting that overall portfolio value is a better indicator of long
+term health than what's happening to your fiat today.  
+
+The behavior BlueCollar exhibits is markedly counterintuitive -- exchange the asset
+of appreciating value for the asset of depreciating value. The automation of the
+strategy took an approach where BlueCollar manages trading activity based on the
+settings provided by an operator. So in its current state, the trader's decisions
+are also a factor that influences performance.
+
+For a look at longer term performance over a variety of market movement you can
+see this ![wiki page](https://github.com/AlbatrossAutomated/blue_collar_gdax/wiki/Performance)  
+
+#### Characteristics/Behavior
 * No use of Technical Analysis (TA). It is purely reactive to events affecting the
 status of its own orders.
 * Perpetually a market maker. It does not halt/pause it’s own trading and maintains
