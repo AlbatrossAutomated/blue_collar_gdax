@@ -77,7 +77,7 @@ development.
 
 Expect your taxes to be complicated by running BlueCollar.
 
-#### Background
+## Background
 BlueCollar has been a hobby project of mine for a few years now. It made its first
 automated trade on October 30th, 2013 on the CampBX exchange. It turned out to be
 a very interesting time to enter the market. BTC was trading at around $200, then
@@ -160,7 +160,7 @@ the Total account value is generally steady upward. It should be clear why earli
 I warned "A sell off in periods of significantly declining balances results in
 unrealized losses becoming realized, and neutralizes the trader's long term strategy."
 In the graph above in later December, the fiat account has dropped by about half.
-Operating BlueCollar over long periods can at times require a strong stomach, 
+Operating BlueCollar over long periods can at times require a strong stomach,
 or at least trusting that overall portfolio value is a better indicator of long
 term health than what's happening to your fiat today.  
 
