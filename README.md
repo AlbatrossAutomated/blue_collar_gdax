@@ -302,8 +302,6 @@ over the course of trading, the pending buy order is canceled, and a rebuy order
 is placed at a price that is PI + BDI below the price of the trader's lowest pending
 sell.
 
-**>>>Add an image from the talk illustrating BDI, PI, and Straddle<<<**  
-
 ### When a Straddle Clears
 If all sell orders execute, then the pending buy order is cancelled, and the bot
 employs its scrum bidding logic again.
