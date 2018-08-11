@@ -6,7 +6,7 @@ gem 'pg'
 gem 'rake'
 gem 'awesome_print'
 gem 'coinbase-exchange', '0.1.1' # later version returns hashes instead of JSON
-gem 'sinatra'
+gem 'sinatra', '~> 2.0.2'
 gem 'dotenv-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
