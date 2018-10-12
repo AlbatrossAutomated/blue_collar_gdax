@@ -38,14 +38,14 @@ class Request
     end
 
     def sell_order(params)
-      info = "#{params[:quantity]} #{ENV['BASE_CURRENCY']} @ $#{params[:ask]}"
-      Bot.log("Limit SELL params: #{info}")
+      msg = "#{params[:quantity]} #{ENV['BASE_CURRENCY']} @ $#{params[:ask]}"
+      Bot.log("Limit SELL params: #{msg}")
       @client.sell(params[:quantity], params[:ask])
     end
 
     def buy_order(params)
-      info = "#{params[:quantity]} #{ENV['BASE_CURRENCY']}, $#{params[:bid]}"
-      Bot.log("Limit BUY params: #{info}")
+      msg = "#{params[:quantity]} #{ENV['BASE_CURRENCY']}, $#{params[:bid]}"
+      Bot.log("Limit BUY params: #{msg}")
       @client.buy(params[:quantity], params[:bid], stp: 'cn')
     end
 
