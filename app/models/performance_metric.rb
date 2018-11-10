@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 class PerformanceMetric < ApplicationRecord
+  extend Rounding
+
   class << self
     # :base_currency_for_sale -> total base currency in pending sell orders
     # :best_bid -> best market bid at time of write
-    # :quote_currency_balance -> money in cash account
+    # :quote_currency_balance -> funds in quote currency account
     # :base_currency_balance -> unsellable_partial_buy amounts
     # :quote_currency_profit -> see QuoteCurrencyProfit#current_trade_cycle
     # :base_currency_profit -> the total base currency stashed
@@ -35,7 +37,8 @@ class PerformanceMetric < ApplicationRecord
 
     def record
       metric = create(calculate)
-      Bot.log("Portfolio Value: #{metric.portfolio_quote_currency_value.round(2)}")
+      qc_pv = 
+      Bot.log("Portfolio Value: #{round_to_qc_tick(metric.portfolio_quote_currency_value)}")
     end
 
     def base_currency_for_sale(funds)

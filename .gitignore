@@ -25,7 +25,7 @@ dump.rdb
 # Ignore Byebug command history file.
 .byebug_history
 
-# Ignore all mac metadata files and emacs autosaves
+# Ignore all mac metadata files, emacs autosaves, and VS Code
 auto-save-list
 custom.el
 url/
@@ -39,6 +39,7 @@ org-mode-config.el
 .DS_Store
 org-clock-save.el
 emacs-config.el
+.vscode
 
 # Ignore coverage
 coverage
