@@ -8,7 +8,7 @@ class Decide
 
     def scrum_params
       best_bid = RequestUsher.execute('quote')['bids'][0][0].to_f
-      bid = round_to_qc_tick(best_bid)
+      bid = qc_tick_rounded(best_bid)
       {
         bid: bid,
         quantity: buy_quantity(bid)
@@ -16,7 +16,7 @@ class Decide
     end
 
     def buy_down_params(previous_bid)
-      bid = round_to_qc_tick(previous_bid - BotSettings::BUY_DOWN_INTERVAL)
+      bid = qc_tick_rounded(previous_bid - BotSettings::BUY_DOWN_INTERVAL)
       Bot.log("BDI: #{BotSettings::BUY_DOWN_INTERVAL}. Buy Down Bid: #{bid}")
       log_coverage(previous_bid)
 
@@ -31,7 +31,7 @@ class Decide
       # write lags.
       lowest_ask = FlippedTrade.lowest_ask
       straddle = BotSettings::BUY_DOWN_INTERVAL + BotSettings::PROFIT_INTERVAL
-      bid = round_to_qc_tick(lowest_ask - straddle)
+      bid = qc_tick_rounded(lowest_ask - straddle)
 
       {
         bid: bid,
@@ -59,7 +59,7 @@ class Decide
     end
 
     def valid_buy_quantity(quantity)
-      quantity = round_to_bc_tick(quantity)
+      quantity = bc_tick_rounded(quantity)
       min_allowed = ENV['MIN_TRADE_AMT'].to_f
 
       return quantity if quantity >= min_allowed
@@ -73,13 +73,13 @@ class Decide
       hoard = BotSettings::HOARD_QC_PROFITS ? QuoteCurrencyProfit.current_trade_cycle : 0.0
       reserve = BotSettings::RESERVE
 
-      round_to_qc_tick(balance - hoard - reserve)
+      qc_tick_rounded(balance - hoard - reserve)
     end
 
     def log_coverage(previous_bid)
       covered_to_price = previous_bid * (1 - BotSettings::COVERAGE)
       msg = "COVERAGE: #{BotSettings::COVERAGE * 100}%." +
-            " Covered to: $#{round_to_qc_tick(covered_to_price)}."
+            " Covered to: $#{qc_tick_rounded(covered_to_price)}."
       Bot.log(msg)
     end
 
@@ -96,7 +96,7 @@ class Decide
       # affordability.
 
       cost = ((params[:bid] * params[:quantity]) * (1 + ENV['BUY_FEE'].to_f)).round(2)
-      round_to_qc_tick(cost)
+      qc_tick_rounded(cost)
     end
 
     def bid_again?(current_bid)
@@ -159,7 +159,7 @@ class Decide
     end
 
     def calculate_sell_params(buy_price, buy_quantity, cost)
-      sell_price = round_to_qc_tick(buy_price + BotSettings::PROFIT_INTERVAL)
+      sell_price = qc_tick_rounded(buy_price + BotSettings::PROFIT_INTERVAL)
       projected_revenue = sell_price * buy_quantity
       profit_without_stash = projected_revenue - cost
 
@@ -174,8 +174,8 @@ class Decide
       # so maybe it evens out. Adding a 'QC_TICK_SIZE' is assurance for a slightly
       # positive result for the ones that would otherwise be slightly negative.
 
-      ask = round_to_qc_tick(cost / buy_quantity) + ENV['QC_TICK_SIZE'].to_f
-      msg = "#{ENV['QUOTE_CURRENCY']} profit would be #{round_to_qc_tick(profit_without_stash)}. " +
+      ask = qc_tick_rounded(cost / buy_quantity) + ENV['QC_TICK_SIZE'].to_f
+      msg = "#{ENV['QUOTE_CURRENCY']} profit would be #{qc_tick_rounded(profit_without_stash)}. " +
             "Selling at breakeven: #{ask}."
       Bot.log(msg, nil, :warn)
 
@@ -195,7 +195,7 @@ class Decide
         # Bot.log(msg)
 
         {
-          ask: round_to_qc_tick(ask),
+          ask: qc_tick_rounded(ask),
           quantity: buy_quantity
         }
       else
@@ -214,25 +214,25 @@ class Decide
         log_sell_side(ask, profit_after_stash, stash)
 
         {
-          ask: round_to_qc_tick(ask),
-          quantity: round_to_bc_tick(quantity_less_stash)
+          ask: qc_tick_rounded(ask),
+          quantity: bc_tick_rounded(quantity_less_stash)
         }
       end
     end
 
     def skip_stashing_params(ask, buy_quantity, profit_without_stash, quantity_less_stash)
-      Bot.log("Sell size after stash would be invalid (#{round_to_bc_tick(quantity_less_stash)}). Skipping stashing.")
+      Bot.log("Sell size after stash would be invalid (#{bc_tick_rounded(quantity_less_stash)}). Skipping stashing.")
       log_sell_side(ask, profit_without_stash, 0.0)
 
       {
-        ask: round_to_qc_tick(ask),
+        ask: qc_tick_rounded(ask),
         quantity: buy_quantity
       }
     end
 
     def log_sell_side(ask, quote_profit, base_profit)
-      msg = "Selling at #{round_to_qc_tick(ask)} for an estimated profit of #{round_to_qc_tick(quote_profit)} " +
-            "#{ENV['QUOTE_CURRENCY']} and #{round_to_bc_tick(base_profit)} #{ENV['BASE_CURRENCY']}."
+      msg = "Selling at #{qc_tick_rounded(ask)} for an estimated profit of #{qc_tick_rounded(quote_profit)} " +
+            "#{ENV['QUOTE_CURRENCY']} and #{bc_tick_rounded(base_profit)} #{ENV['BASE_CURRENCY']}."
       Bot.log(msg)
     end
 

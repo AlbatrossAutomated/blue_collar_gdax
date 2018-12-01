@@ -38,7 +38,7 @@ class PerformanceMetric < ApplicationRecord
     def record
       metric = create(calculate)
       qc_pv = 
-      Bot.log("Portfolio Value: #{round_to_qc_tick(metric.portfolio_quote_currency_value)}")
+      Bot.log("Portfolio Value: #{qc_tick_rounded(metric.portfolio_quote_currency_value)}")
     end
 
     def base_currency_for_sale(funds)
