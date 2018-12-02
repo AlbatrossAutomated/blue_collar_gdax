@@ -1,13 +1,19 @@
 ***
-_UPDATE: A similar market maker named 'Tumbleweed GDAX' is now open sourced as
-well. It should be somewhat more affordable to operate than BlueCollar.
-Tumbleweed replaces BlueCollar's 'fund stretching' strategy of `COVERAGE` with
-simply determined and configurable `NO_TRADE_ZONES`. This is hopefully a more
-easily understandable mechanism for operators than `COVERAGE`. With Tumbleweed,
-quantity per trade is also configurable, meaning smaller stacks won't bump up
-against the exchange's min trade amount as they do with BlueCollar._  
+### UPDATE 12/1/2018
+I likely won't push any more updates to this repo as I've been developing
+and operating mostly with [Tumbleweed GDAX](https://github.com/AlbatrossAutomated/tumbleweed_gdax).
 
-[Tumbleweed GDAX](https://github.com/AlbatrossAutomated/tumbleweed_gdax)
+From operators' feeback,
+BlueCollar's `COVERAGE` is confusing, and I have to agree. Picking an adequate
+number for this setting requires experience running the trader, and `COVERAGE` is
+probably not the right name for it anyways - perhaps `APPETITE`.
+
+Tumbleweed replaces BlueCollar's 'fund stretching' strategy of `COVERAGE` with
+simply determined and configurable `NO_TRADE_ZONES`. Hopefully it's a more easily
+understandable mechanism for than `COVERAGE`. With Tumbleweed, quantity per trade
+is also configurable, meaning smaller stacks won't bump up against the exchange's
+min trade amount as they can with BlueCollar. In general Tumbleweed should be easier
+and more affordable to operate.
 ***
 
 This project is for developers who are also traders. If you haven't already developed

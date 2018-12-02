@@ -15,7 +15,7 @@ class PerformanceMetric < ApplicationRecord
 
     def calculate
       funds = RequestUsher.execute('funds')
-      best_bid = BigDecimal.new(RequestUsher.execute('quote')['bids'][0][0])
+      best_bid = BigDecimal(RequestUsher.execute('quote')['bids'][0][0])
 
       base_for_sale = base_currency_for_sale(funds)
       quote_bal = quote_currency_balance(funds)
@@ -37,23 +37,22 @@ class PerformanceMetric < ApplicationRecord
 
     def record
       metric = create(calculate)
-      qc_pv = 
       Bot.log("Portfolio Value: #{qc_tick_rounded(metric.portfolio_quote_currency_value)}")
     end
 
     def base_currency_for_sale(funds)
       amt = funds.detect { |f| f['currency'] == ENV['BASE_CURRENCY'] }['hold']
-      BigDecimal.new(amt)
+      BigDecimal(amt)
     end
 
     def base_currency_balance(funds)
       amt = funds.detect { |f| f['currency'] == ENV['BASE_CURRENCY'] }['available']
-      BigDecimal.new(amt)
+      BigDecimal(amt)
     end
 
     def quote_currency_balance(funds)
       amt = funds.detect { |f| f['currency'] == ENV['QUOTE_CURRENCY'] }['available']
-      BigDecimal.new(amt)
+      BigDecimal(amt)
     end
 
     def pending_buy_cost
@@ -67,8 +66,8 @@ class PerformanceMetric < ApplicationRecord
       buy_order = open_orders.select { |ord| ord['side'] == 'buy' }.compact.first
 
       if buy_order
-        price = BigDecimal.new(buy_order['price'])
-        size = BigDecimal.new(buy_order['size'])
+        price = BigDecimal(buy_order['price'])
+        size = BigDecimal(buy_order['size'])
         price * size
       else
         0.0

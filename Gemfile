@@ -55,6 +55,8 @@ end
 group :test do
   gem 'json_spec'
   gem 'database_cleaner'
+  # IMPORTANT! - Use caution when upgrading webmock
+  # As of 12/1/2108 any version past 3.1.1 is making live requests to the exchange API on spec runs. Yikes!!
   gem 'webmock', '3.1.1', require: false
   gem 'shoulda-matchers', require: false
   gem 'fantaskspec'

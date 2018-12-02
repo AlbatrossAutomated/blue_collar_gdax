@@ -128,7 +128,7 @@ RSpec.describe Trader, type: :model do
     let(:inaccurate_resp) do
       order = JSON.parse(filled_buy_resp)
       filled_size = order['filled_size']
-      inaccurate = order.merge('filled_size' => BigDecimal.new(filled_size) * 0.10)
+      inaccurate = order.merge('filled_size' => BigDecimal(filled_size) * 0.10)
       inaccurate.to_json
     end
     let(:inaccurate_parsed) { JSON.parse(inaccurate_resp) }
@@ -200,9 +200,9 @@ RSpec.describe Trader, type: :model do
 
     context 'the order executes' do
       let(:parsed_resp) { parsed_filled_buy }
-      let(:price) { BigDecimal.new(parsed_resp['price']) }
-      let(:quantity) { BigDecimal.new(parsed_resp['size']) }
-      let(:fee) { BigDecimal.new(parsed_resp['fill_fees']) }
+      let(:price) { BigDecimal(parsed_resp['price']) }
+      let(:quantity) { BigDecimal(parsed_resp['size']) }
+      let(:fee) { BigDecimal(parsed_resp['fill_fees']) }
       let(:cost) { (price * quantity) + fee }
 
       before do
@@ -218,7 +218,7 @@ RSpec.describe Trader, type: :model do
         expect(ft.buy_fee).to eq fee
         expect(ft.cost).to eq cost
         expect(ft.buy_order_id).to eq parsed_resp['id']
-        expect(ft.trade_pair).to eq ENV['PRODUCT_ID']
+        expect(ft.trade_pair).to eq parsed_resp['product_id']
       end
 
       it 'calls for placing a corresponding sell' do
@@ -236,9 +236,9 @@ RSpec.describe Trader, type: :model do
     let(:bid) { JSON.parse(file_fixture('buy_order.json').read)['price'] }
     let(:flipped_trade) do
       create(:flipped_trade, :buy_executed,
-             buy_price: BigDecimal.new(parsed_filled_buy['price']),
-             buy_fee: BigDecimal.new(parsed_filled_buy['fill_fees']),
-             base_currency_purchased: BigDecimal.new(parsed_filled_buy['filled_size']),
+             buy_price: BigDecimal(parsed_filled_buy['price']),
+             buy_fee: BigDecimal(parsed_filled_buy['fill_fees']),
+             base_currency_purchased: BigDecimal(parsed_filled_buy['filled_size']),
              buy_order_id: parsed_filled_buy['id'])
     end
     let(:buy_price) { parsed_filled_buy['price'].to_f }
