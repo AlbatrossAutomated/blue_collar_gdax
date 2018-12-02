@@ -1,24 +1,24 @@
 source 'https://rubygems.org'
 
-ruby '2.4.2'
+ruby '2.5.1'
 
 gem 'pg'
 gem 'rake'
 gem 'awesome_print'
 gem 'coinbase-exchange', '0.1.1' # later version returns hashes instead of JSON
-gem 'sinatra', '~> 2.0.2'
+gem 'sinatra'#, '~> 2.0.2'
 gem 'dotenv-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.5'
+gem 'rails', '5.2.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 gem 'clockwork', require: false
 gem 'active_attr'
 
 # needed in prod git pushing Heroku
-gem 'brakeman', :require => false
-gem 'bundler-audit', :require => false
+gem 'brakeman', require: false
+gem 'bundler-audit', require: false
 gem 'rubocop', require: false
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -34,13 +34,11 @@ gem 'rubocop', require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
+gem 'bootsnap', require: false
+
 group :development, :test do
-  gem 'factory_girl'
-  gem 'rspec'
   gem 'rspec-rails'
-  gem 'json_spec'
-  gem 'database_cleaner'
-  gem 'shoulda-matchers', '~> 2.8.0', require: false
+  gem 'factory_bot_rails'
   gem 'rails_best_practices', require: false
   gem 'reek', require: false
   gem 'byebug', platform: :mri
@@ -55,10 +53,12 @@ group :development do
 end
 
 group :test do
-  gem 'simplecov'
-  gem 'webmock'
-  gem 'factory_girl_rails', '~> 4.0'
+  gem 'json_spec'
+  gem 'database_cleaner'
+  gem 'webmock', '3.1.1', require: false
+  gem 'shoulda-matchers', require: false
   gem 'fantaskspec'
+  gem 'simplecov'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
