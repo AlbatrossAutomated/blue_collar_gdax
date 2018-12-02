@@ -10,7 +10,7 @@ probably not the right name for it anyways - perhaps `APPETITE`.
 
 Tumbleweed replaces BlueCollar's 'fund stretching' strategy of `COVERAGE` with
 simply determined and configurable `NO_TRADE_ZONES`. Hopefully it's a more easily
-understandable mechanism for than `COVERAGE`. With Tumbleweed, quantity per trade
+understandable mechanism than `COVERAGE`. With Tumbleweed, quantity per trade
 is also configurable, meaning smaller stacks won't bump up against the exchange's
 min trade amount as they can with BlueCollar. In general Tumbleweed should be easier
 and more affordable to operate.
