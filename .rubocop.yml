@@ -1,3 +1,4 @@
+require: rubocop-rails
 inherit_from: .rubocop_todo.yml
 
 Style/GuardClause:
@@ -15,7 +16,15 @@ Metrics/AbcSize:
   Exclude:
     - 'app/models/settings_estimator.rb'
 
+Metrics/LineLength:
+  Exclude:
+    - config/initializers/bot_settings.rb
+
 Metrics/MethodLength:
   Exclude:
     - 'app/models/settings_estimator.rb'
     - 'db/migrate/*'
+
+Rails/Output:
+  Exclude:
+    - 'app/models/bot.rb'

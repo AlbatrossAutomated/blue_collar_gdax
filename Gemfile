@@ -1,16 +1,16 @@
 source 'https://rubygems.org'
 
-ruby '2.5.1'
+ruby '2.6.3'
 
 gem 'pg'
 gem 'rake'
 gem 'awesome_print'
 gem 'coinbase-exchange', '0.1.1' # later version returns hashes instead of JSON
-gem 'sinatra'#, '~> 2.0.2'
+gem 'sinatra'
 gem 'dotenv-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.2.0'
+gem 'rails', '5.2.3'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 gem 'clockwork', require: false
@@ -20,6 +20,7 @@ gem 'active_attr'
 gem 'brakeman', require: false
 gem 'bundler-audit', require: false
 gem 'rubocop', require: false
+gem 'rubocop-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
@@ -36,6 +37,8 @@ gem 'rubocop', require: false
 
 gem 'bootsnap', require: false
 
+gem 'hashdiff', ['>= 1.0.0.beta1', '< 2.0.0'] # see https://github.com/liufengyun/hashdiff/issues/45
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
@@ -46,19 +49,20 @@ end
 
 group :development do
   gem 'web-console'
-  gem 'listen', '~> 3.0.5'
+  gem 'listen'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'spring-watcher-listen'
 end
 
 group :test do
   gem 'json_spec'
   gem 'database_cleaner'
   # IMPORTANT! - Use caution when upgrading webmock
-  # As of 12/1/2108 any version past 3.1.1 is making live requests to the exchange API on spec runs. Yikes!!
+  # As of 12/1/2018 any version past 3.1.1 is making live requests to the exchange API on spec runs. Yikes!!
   gem 'webmock', '3.1.1', require: false
-  gem 'shoulda-matchers', require: false
+
+  gem 'shoulda-matchers'
   gem 'fantaskspec'
   gem 'simplecov'
 end

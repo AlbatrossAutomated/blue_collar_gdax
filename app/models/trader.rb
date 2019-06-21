@@ -95,9 +95,10 @@ class Trader
       sell_resp = RequestUsher.execute('sell_order', params)
       base_profit = BigDecimal(buy_order["filled_size"]) - params[:quantity]
 
-      flipped_trade.update_attributes(sell_price: params[:ask],
-                                      sell_order_id: sell_resp['id'],
-                                      base_currency_profit: base_profit)
+      flipped_trade.update(sell_price: params[:ask],
+                           sell_order_id: sell_resp['id'],
+                           base_currency_profit: base_profit)
+
       Bot.log("SELL placed. Response: ", sell_resp)
     end
 
