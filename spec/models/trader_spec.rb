@@ -15,7 +15,7 @@ RSpec.describe Trader, type: :model do
       allow(Request).to receive(:buy_order) { pending_buy_resp }
     end
 
-    context 'prior to buy order monitoring' do
+    context 'scrum order placement' do
       before do
         allow(Trader).to receive(:loop).and_yield
         allow(Trader).to receive(:monitor_scrum) { { monitoring: 'psyche!' } }
@@ -54,7 +54,7 @@ RSpec.describe Trader, type: :model do
       end
     end
 
-    context 'while monitoring pending scrum order' do
+    context 'monitoring pending scrum order' do
       context 'order executed' do
         let(:straddle_order_id) { '6' }
         let(:straddle_bid) { Decide.scrum_params[:bid] }
