@@ -59,9 +59,7 @@ function addKeyEstimates(resp) {
   // var percentProfit = ((resp.quote_profit_per_sell / resp.free_fall_trades[0].cost) * 100).toFixed(4);
 
   $('#quantity-buy').html(resp.buy_quantity);
-  $('#quantity-sell').html(resp.sell_quantity);
   $('#quote-profit-per-sell').html(resp.quote_profit_per_sell);
-  $('#base-profit-per-sell').html(resp.base_profit_per_sell);
   $('#covered-to').html(coveredToPrice);
 }
 
@@ -76,8 +74,7 @@ function addFreeFallTrades(trades) {
                   '<td>' + val.sell_quantity + '</td>' +
                   '<td>' + val.sell_fee + '</td>' +
                   '<td>' + val.total_revenue + '</td>' +
-                  '<td>' + val.quote_profit + '</td>' +
-                  '<td>' + val.base_profit + '</td>'
+                  '<td>' + val.quote_profit + '</td>'
 
     $('#free-fall-trades').append('<tr>' + rowData + '</tr>');
   });

@@ -125,18 +125,6 @@
         </div>
         <div class="row">
           <div class="three columns">
-            <label class="required" for="settings_estimator_base_currency_stash">Base currency stash (%)</label>
-            <div class="tooltip">?
-              <span class="tooltiptext">
-                The percent of per sell profit to realize in the base currency. For
-                example, if this was set at 20% and quote profit was $0.05, then
-                $0.01 worth of the base currency will not be included in the sell
-                order quantity, and quote profit would be $0.04.
-              </span>
-            </div>
-            <input type="text" name="settings_estimator[base_currency_stash]" id="settings_estimator_base_currency_stash" value="0.0" required/>
-          </div>
-          <div class="three columns">
             <label class="required" for="settings_estimator_reserve">Reserve</label>
             <div class="tooltip">?
               <span class="tooltiptext">
@@ -145,7 +133,7 @@
                 hold back from trading in you're trading LTC-USD.
               </span>
             </div>
-            <input type="text" name="settings_estimator[reserve]" id="settings_estimator_reserve" value="0.0" required/>
+            <input type="text" name="settings_estimator[reserve]" id="settings_estimator_reserve" value="0" required/>
           </div>
         </div>
         <div class="row">
@@ -154,7 +142,7 @@
       </form>
 
       <div class="row" id="results-summary">
-        <h5 class="brand-secondary"><em>Estimates</em></h5>
+        <h5 class="brand-secondary"><em>Key Estimates</em></h5>
         <div class="results-errors">
           <span class="close">&times;</span>
           <ul class="results-errors-list"></ul>
@@ -162,16 +150,14 @@
         <table class="u-full-width" id="key-results">
           <thead>
             <tr>
-              <th>Quantity<sub>Buy</sub></th>
-              <th>Quantity<sub>Sell</sub></th>
-              <th>Profit<sub>Quote</sub></th>
-              <th>Profit<sub>Base</sub></th>
+              <th>Quantity per Trade</th>
+              <th>Profit Per Sell</th>
               <th>'Free Fall' Covered To
                 <div class="tooltip">?
                   <span class="tooltiptext far-right-tooltip">
                     If the price falls without an intermittent uptick large enough
-                    to trigger a sell order, this is the price where all your funds
-                    will be tide up in pending sells.
+                    to trigger a sell order, this is the estimated price where all
+                    your funds will be tide up in pending sells.
                   </span>
                 </div>
               </th>
@@ -180,9 +166,7 @@
           <tbody>
             <tr>
               <td id="quantity-buy"></td>
-              <td id="quantity-sell"></td>
               <td id="quote-profit-per-sell"></td>
-              <td id="base-profit-per-sell"></td>
               <td id="covered-to"></td>
             </tr>
           </tbody>
@@ -211,11 +195,10 @@
                   <th>Sell<sub>Q</sub></th>
                   <th>Sell<sub>Fee</sub></th>
                   <th>Revenue</th>
-                  <th>Profit<sub>Quote</sub></th>
-                  <th>Profit<sub>Base</sub></th>
+                  <th>Profit</th>
                 </tr>
               </thead>
-              <tbody  id="free-fall-trades">
+              <tbody id="free-fall-trades">
               </tbody>
             </table>
           </div>

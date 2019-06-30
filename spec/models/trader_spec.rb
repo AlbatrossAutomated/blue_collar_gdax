@@ -368,6 +368,7 @@ RSpec.describe Trader, type: :model do
       create_flipped_trades(open_orders)
       allow(Trader).to receive(:loop).and_yield
       allow(Bot).to receive(:log)
+      allow_any_instance_of(FlippedTrade).to receive(:reconcile)
     end
 
     context 'neither buy or sell(s) execute' do
@@ -729,6 +730,8 @@ RSpec.describe Trader, type: :model do
       before do
         create_flipped_trades(open_orders)
         allow(Request).to receive(:open_orders) { still_open }
+        allow_any_instance_of(FlippedTrade).to receive(:reconcile_buy_side)
+        allow_any_instance_of(FlippedTrade).to receive(:reconcile_sell_side)
       end
 
       it 'calls for reconciling the executed sells' do
@@ -745,7 +748,11 @@ RSpec.describe Trader, type: :model do
       let(:fills) { JSON.parse(open_orders).select { |ord| ord['id'] == ('2' || '3') } }
       let(:sold_count) { fills.size }
 
-      before { create_flipped_trades(fills.to_json) }
+      before do
+        create_flipped_trades(fills.to_json)
+        allow_any_instance_of(FlippedTrade).to receive(:reconcile_buy_side)
+        allow_any_instance_of(FlippedTrade).to receive(:reconcile_sell_side)
+      end
 
       context 'and are tracked' do
         let(:all_filled) { [].to_json }

@@ -36,6 +36,7 @@ RSpec.describe PerformanceMetric, type: :model do
     let(:trades) { FlippedTrade.all }
     let(:flipped) { trades.where(sell_pending: false) }
     let(:pm) { PerformanceMetric.last }
+    let(:base_stash) { 0.0 }
 
     subject { PerformanceMetric.record }
 
@@ -45,30 +46,14 @@ RSpec.describe PerformanceMetric, type: :model do
       allow(Bot).to receive(:log)
     end
 
+    it_behaves_like 'a performance_metric creator'
+
     it "logs the portfolio's value" do
       expect(Bot).to receive(:log).with(log_msg)
       subject
     end
 
-    context 'base currency is _not_ being stashed' do
-      let(:base_stash) { 0.0 }
-
-      it_behaves_like 'a performance_metric creator'
-    end
-
-    context 'base currency is being stashed' do
-      let(:base_stash) { FlippedTrade.base_currency_profit }
-
-      before do
-        FlippedTrade.all.update(base_currency_profit: BigDecimal('0.001'))
-      end
-
-      it_behaves_like 'a performance_metric creator'
-    end
-
     context 'there are unsellables' do
-      let(:base_stash) { 0.0 }
-
       before do
         create(:unsellable_partial_buy, base_currency_purchased: base_bal)
       end

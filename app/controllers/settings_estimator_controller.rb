@@ -24,7 +24,6 @@ class SettingsEstimatorController < Rails::ApplicationController
       base_currency_price
       min_trade_amount
       coverage
-      base_currency_stash
       buy_down_interval
       profit_interval
     ]
