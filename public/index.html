@@ -36,31 +36,29 @@
                 e.g., if trading LTC-USD, USD price goes here. Best bid will do.
               </span>
             </div>
-            <input type="text" name="settings_estimator[base_currency_price]" id="settings_estimator_base_currency_price" required/>
+            <input type="number" step="any" name="settings_estimator[base_currency_price]" id="settings_estimator_base_currency_price" required/>
           </div>
           <div class="three columns">
             <label class="required" for="settings_estimator_buy_fee">Buy fee (%)</label>
             <div class="tooltip">?
               <span class="tooltiptext">
-                Most trades will be maker trades where the fee is 0.0 on GDAX.
-                Taker fees vary per crypto and by user volume.
-                If you'd like to simulate taker trades, check GDAX docs for the
-                crypto you intend to trade, e.g, LTC taker fee is 0.3%.
+                Most trades will incur a maker fee where the first tier is 0.15%,
+                though fees vary depending on a user's trailing 30 day volume.
+                The fee for taker trades starts at 0.25%.
               </span>
             </div>
-            <input type="text" name="settings_estimator[buy_fee]" id="settings_estimator_buy_fee" value="0.0" required/>
+            <input type="number" step="0.01" name="settings_estimator[buy_fee]" id="settings_estimator_buy_fee" value="0.15" required/>
           </div>
           <div class="three columns">
             <label class="required" for="settings_estimator_sell_fee">Sell fee (%)</label>
             <div class="tooltip">?
               <span class="tooltiptext">
-                Most trades will be maker trades where the fee is 0.0 on GDAX.
-                Taker fees vary per crypto and by user volume.
-                If you'd like to simulate taker trades, check GDAX docs for the
-                crypto you intend to trade, e.g, LTC taker fee is 0.3%.
+                Most trades will be maker trades where the starting fee is 0.15%,
+                though fees vary based on a user's trailing 30 day volume.
+                The fee for taker trades starts at 0.25%.
               </span>
             </div>
-            <input type="text" name="settings_estimator[sell_fee]" id="settings_estimator_sell_fee" value="0.0" required/>
+            <input type="number" step="0.01" name="settings_estimator[sell_fee]" id="settings_estimator_sell_fee" value="0.15" required/>
           </div>
           <div class="three columns">
             <label class="required" for="settings_estimator_balance">Quote currency balance</label>
@@ -70,7 +68,7 @@
                 you want to trade, e.g., USD balance if your trading LTC-USD.
               </span>
             </div>
-            <input type="text" name="settings_estimator[quote_currency_balance]" id="settings_estimator_quote_currency_balance" required/>
+            <input type="number" step="any" name="settings_estimator[quote_currency_balance]" id="settings_estimator_quote_currency_balance" required/>
           </div>
         </div>
         <div class="row">
@@ -81,7 +79,7 @@
                 The exchange's minimum order quantity requirement for the crypto you want to trade.
               </span>
             </div>
-            <input type="text" name="settings_estimator[min_trade_amount]" id="settings_estimator_min_trade_amount" required/>
+            <input type="number" step="any" name="settings_estimator[min_trade_amount]" id="settings_estimator_min_trade_amount" required/>
             <small class="hint">
               Found <a href="https://support.gdax.com/customer/portal/articles/2725970-trading-rules" target="_blank">here</a> under 'Order Minimums'.
             </small>
@@ -100,7 +98,7 @@
                 whenever a sell order executes.
               </span>
             </div>
-            <input type="text" name="settings_estimator[coverage]" placeholder="e.g. 35" id="settings_estimator_coverage" required/>
+            <input type="number" step="any" name="settings_estimator[coverage]" placeholder="e.g. 35" id="settings_estimator_coverage" required/>
           </div>
           <div class="three columns">
             <label class="required" for="settings_estimator_buy_down_interval">Buy down interval</label>

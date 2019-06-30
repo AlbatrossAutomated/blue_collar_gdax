@@ -72,7 +72,7 @@ class Decide
       currency = ENV['QUOTE_CURRENCY']
       balance = funds.find { |fund| fund['currency'] == currency }['available'].to_f
       hoard = BotSettings::HOARD_QC_PROFITS ? QuoteCurrencyProfit.current_trade_cycle : 0.0
-      reserve = BotSettings::RESERVE
+      reserve = BotSettings::QC_RESERVE
 
       qc_tick_rounded(balance - hoard - reserve)
     end
@@ -163,10 +163,10 @@ class Decide
       # Because rounding has to occur at the decimal places of the exchange tick-size,
       # (rev - cost) can end up being slightly negative at a rounded breakeven price.
       # Some orders' breakeven prices will result in a slightly positive (rev - cost),
-      # so maybe it evens out. Adding a 'QC_TICK_SIZE' is further assurance for a
+      # so maybe it evens out. Adding a 'QC_INCREMENT' is further assurance for a
       # non-negative profit.
 
-      ask = qc_tick_rounded(cost / buy_quantity) + ENV['QC_TICK_SIZE'].to_f
+      ask = qc_tick_rounded(cost / buy_quantity) + ENV['QC_INCREMENT'].to_f
       msg = "#{ENV['QUOTE_CURRENCY']} profit would be #{qc_tick_rounded(profit_without_stash)}. " \
             "Selling at breakeven: #{ask}."
       Bot.log(msg, nil, :warn)
@@ -194,7 +194,6 @@ class Decide
       else
         stash = buy_quantity - quantity_less_stash
         log_sell_side(ask, profit_after_stash, stash)
-
         sell_params_hash(qc_tick_rounded(ask), bc_tick_rounded(quantity_less_stash))
       end
     end

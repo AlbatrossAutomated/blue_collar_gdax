@@ -52,7 +52,7 @@ RSpec.configure do |config|
     stub_const('BotSettings::CANCEL_RETRIES', 10)
 
     # currently should not be changed
-    stub_const('BotSettings::RESERVE', 0.0)
+    stub_const('BotSettings::QC_RESERVE', 0.0)
     stub_const('BotSettings::BC_STASH', 0.0)
     stub_const('BotSettings::HOARD_QC_PROFITS', true)
   end

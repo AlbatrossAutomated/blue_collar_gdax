@@ -11,7 +11,7 @@ RSpec.describe Decide, type: :model do
     funds.detect { |f| f['currency'] == ENV['QUOTE_CURRENCY'] }['available'].to_f
   end
   let(:quote_currency_profit) { BigDecimal('1605.38') }
-  let(:quote_currency_reserve) { BotSettings::RESERVE }
+  let(:quote_currency_reserve) { BotSettings::QC_RESERVE }
   let(:available_quote_currency) do
     qc_tick_rounded(quote_currency_balance - quote_currency_profit - quote_currency_reserve)
   end
@@ -118,7 +118,7 @@ RSpec.describe Decide, type: :model do
 
         context 'order filled before checking bid' do
           # best_bid will be less than current in this case
-          let(:high_bid) { (qc_tick_rounded(best_bid_on_exchange) + ENV['QC_TICK_SIZE'].to_f) }
+          let(:high_bid) { (qc_tick_rounded(best_bid_on_exchange) + ENV['QC_INCREMENT'].to_f) }
           let(:bid) { high_bid }
 
           it 'returns false' do
@@ -128,7 +128,7 @@ RSpec.describe Decide, type: :model do
 
         context 'current bid is less than best bid on exchange' do
           let(:log_msg) { "BID too low. Best bid: #{best_bid_on_exchange}." }
-          let(:low_bid) { best_bid_on_exchange - ENV['QC_TICK_SIZE'].to_f }
+          let(:low_bid) { best_bid_on_exchange - ENV['QC_INCREMENT'].to_f }
           let(:bid) { low_bid }
 
           before { allow(Bot).to receive(:log) }
@@ -190,10 +190,10 @@ RSpec.describe Decide, type: :model do
           expect(Decide.quote_currency_balance).to eq available_quote_currency
         end
 
-        context 'a positive RESERVE value is also set' do
-          before { stub_const("BotSettings::RESERVE", 100.23) }
+        context 'a positive QC_RESERVE value is also set' do
+          before { stub_const("BotSettings::QC_RESERVE", 100.23) }
 
-          it 'returns the quote currency balance less cummulative profit less RESERVE amount' do
+          it 'returns the quote currency balance less cummulative profit less QC_RESERVE amount' do
             less_profit = quote_currency_balance - quote_currency_profit
             tradable_balance = qc_tick_rounded(less_profit - quote_currency_reserve)
             expect(Decide.quote_currency_balance).to eq tradable_balance
@@ -208,10 +208,10 @@ RSpec.describe Decide, type: :model do
           expect(Decide.quote_currency_balance).to eq qc_tick_rounded(quote_currency_balance)
         end
 
-        context 'a positive RESERVE value is set' do
-          before { stub_const("BotSettings::RESERVE", 210.23) }
+        context 'a positive QC_RESERVE value is set' do
+          before { stub_const("BotSettings::QC_RESERVE", 210.23) }
 
-          it 'returns the quote currency balance less RESERVE amount' do
+          it 'returns the quote currency balance less QC_RESERVE amount' do
             tradable_balance = qc_tick_rounded(quote_currency_balance - quote_currency_reserve)
             expect(Decide.quote_currency_balance).to eq tradable_balance
           end
@@ -354,7 +354,7 @@ RSpec.describe Decide, type: :model do
             let(:fee) { BigDecimal(filled_buy_order['fill_fees']) }
             let(:buy_order) { filled_buy_order }
             let(:cost) { (price * quantity) + fee }
-            let(:expected_breakeven_ask) { qc_tick_rounded(cost / quantity) + ENV['QC_TICK_SIZE'].to_f }
+            let(:expected_breakeven_ask) { qc_tick_rounded(cost / quantity) + ENV['QC_INCREMENT'].to_f }
             let(:breakeven_msg) { /Selling at breakeven/ }
 
             before do
@@ -452,7 +452,7 @@ RSpec.describe Decide, type: :model do
             let(:fee) { BigDecimal(filled_buy_order['fill_fees']) }
             let(:buy_order) { filled_buy_order }
             let(:cost) { (price * quantity) + fee }
-            let(:expected_breakeven_ask) { qc_tick_rounded(cost / quantity) + ENV['QC_TICK_SIZE'].to_f }
+            let(:expected_breakeven_ask) { qc_tick_rounded(cost / quantity) + ENV['QC_INCREMENT'].to_f }
             let(:breakeven_msg) { /Selling at breakeven/ }
 
             before do
@@ -611,7 +611,7 @@ RSpec.describe Decide, type: :model do
             let(:fee) { BigDecimal(filled_buy_order['fill_fees']) }
             let(:buy_order) { filled_buy_order }
             let(:cost) { (price * quantity) + fee }
-            let(:expected_breakeven_ask) { qc_tick_rounded(cost / quantity) + ENV['QC_TICK_SIZE'].to_f }
+            let(:expected_breakeven_ask) { qc_tick_rounded(cost / quantity) + ENV['QC_INCREMENT'].to_f }
             let(:breakeven_msg) { /Selling at breakeven/ }
 
             before do
