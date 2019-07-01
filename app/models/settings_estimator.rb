@@ -3,6 +3,8 @@
 class SettingsEstimator
   include ActiveAttr::Model
 
+  include Rounding
+
   # inputs
   attribute :quote_currency_balance, type: BigDecimal
   attribute :reserve, type: BigDecimal, default: 0.0
@@ -47,11 +49,11 @@ class SettingsEstimator
     cov = as_proportion(coverage)
     dividend = buy_down_interval * 2 * quote_currency_balance
     divisor = (buy_fee_proportion + 1) * base_currency_price**2 * cov * (2 - cov)
-    (dividend / divisor).round(8)
+    bc_tick_rounded((dividend / divisor))
   end
 
   def calculate_quote_profit_per_sell(buy_price, sell_quantity)
-    (revenue(buy_price, sell_quantity) - costs(buy_price)).round(8)
+    qc_tick_rounded((revenue(buy_price, sell_quantity) - costs(buy_price)))
   end
 
   def revenue(buy_price, sell_quantity)
@@ -75,7 +77,7 @@ class SettingsEstimator
   end
 
   def calculate_zero_balance_price
-    base_currency_price - (base_currency_price * as_proportion(coverage))
+    qc_tick_rounded(base_currency_price - (base_currency_price * as_proportion(coverage)))
   end
 
   def calculate_free_fall_trades
@@ -91,18 +93,18 @@ class SettingsEstimator
         break if total_cost > balance
 
         trade << {
-          balance: balance.round(2),
-          buy_price: buy_price.round(8),
-          buy_quantity: buy_quantity.round(8),
-          cost: cost.round(8),
-          buy_fee: b_fee.round(8),
-          total_cost: total_cost.round(8),
-          sell_price: sell_price.round(8),
-          sell_quantity: sell_quantity.round(8),
-          revenue: revenue.round(8),
-          sell_fee: s_fee.round(8),
-          total_revenue: total_revenue.round(8),
-          quote_profit: (total_revenue - total_cost).round(8)
+          balance: qc_tick_rounded(balance),
+          buy_price: qc_tick_rounded(buy_price),
+          buy_quantity: buy_quantity,
+          cost: qc_tick_rounded(cost),
+          buy_fee: qc_tick_rounded(b_fee),
+          total_cost: qc_tick_rounded(total_cost),
+          sell_price: qc_tick_rounded(sell_price),
+          sell_quantity: sell_quantity,
+          revenue: qc_tick_rounded(revenue),
+          sell_fee: qc_tick_rounded(s_fee),
+          total_revenue: qc_tick_rounded(total_revenue),
+          quote_profit: qc_tick_rounded(total_revenue - total_cost)
         }
 
         balance -= total_cost
