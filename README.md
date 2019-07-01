@@ -1,4 +1,14 @@
 ***
+The GDAX exchange name was changed to Coinbase Pro. This trader runs against the
+Coinbase Pro exchange API.
+
+### UPDATE 7/1/2019
+I'm still running this trader after all so I'll keep pushing updates to this repo as
+long as it makes sense to do so. The recent change in Coinbase Pro's fee structure, plus
+the varying tick sizes (e.g. only whole units of XLM can be traded), broke 'Base Currency
+Stashing'. Thus the feature has been removed. It's too bad, but I'll be thinking on it to
+see if there's another way to go about it given the exchange rules.
+
 ### UPDATE 12/1/2018
 I likely won't push any more updates to this repo as I've been developing
 and operating mostly with [Tumbleweed GDAX](https://github.com/AlbatrossAutomated/tumbleweed_gdax).
