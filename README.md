@@ -2,6 +2,9 @@
 The GDAX exchange name was changed to Coinbase Pro. This trader runs against the
 Coinbase Pro exchange API.
 
+### UPDATE 12/10/2019
+There's been another change to Coinbase Pro's fee structure which **renders this trader inoperable**. Now that there is always a fee - regardless of maker or taker orders - the `PROFIT_INTERVAL` logic **no longer works**. The fix would involve reverting to part of this trader's original approach of setting a fixed nominal profit-per-trade, however I'm not sure when I will have time to do that.
+
 ### UPDATE 7/1/2019
 I'm still running this trader after all so I'll keep pushing updates to this repo as
 long as it makes sense to do so. The recent change in Coinbase Pro's fee structure, plus
